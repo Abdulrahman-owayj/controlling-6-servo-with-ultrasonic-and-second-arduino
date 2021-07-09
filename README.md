@@ -21,8 +21,8 @@ In this project i used an ultrasonic sensor to detect anyone in front of the rob
 const int echoPin = 4;
 const int trigPin = 2;
 
-long duration; // variable for the duration of sound wave travel
-int distance; // variable for the distance measurement
+long duration;                  // variable for the duration of sound wave travel
+int distance;                   // variable for the distance measurement
 
 int ServoR1 = 6;
 int ServoR2 = 5;
@@ -42,8 +42,8 @@ void setup()
   
 {
   Serial.begin(9600);
-  pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
-  pinMode(echoPin, INPUT); // Sets the echoPin as an INPUT
+  pinMode(trigPin, OUTPUT);              // Sets the trigPin as an OUTPUT
+  pinMode(echoPin, INPUT);               // Sets the echoPin as an INPUT
   pinMode(A0, INPUT);
   
   ServoR1_Object.attach(ServoR1);
@@ -53,7 +53,7 @@ void setup()
   ServoL2_Object.attach(ServoL2);
   ServoL3_Object.attach(ServoL3);
   
-       ServoR1_Object.write(0); // intial position
+       ServoR1_Object.write(0);         // intial position
        ServoR2_Object.write(0);
        ServoR3_Object.write(0);
        ServoL1_Object.write(0);
@@ -66,16 +66,16 @@ void loop()
 {
   int Light = analogRead(A0);
   if(Light > 500){
-  while(getDistance() > 25){  continue; } // if the sensor see someone near start counting
+  while(getDistance() > 25){  continue; }              // if the sensor see someone near start counting
 
-  int startTime = millis(); // start counting to know if he stay or pass by only
+  int startTime = millis();                            // start counting to know if he stay or pass by only
 
-  while(getDistance() <25){ // if the new value is less than 25 also enter while loop
+  while(getDistance() <25){                            // if the new value is less than 25 also enter while loop
  
-   int newTime = millis(); //record the current time
+   int newTime = millis();                             //record the current time
 
-  if (newTime - startTime > 3000){ // if the we have 3 sec difference between the first value and current value so customer is standing
-    Serial.write('1'); // send message to screen to open
+  if (newTime - startTime > 3000){                    // if the we have 3 sec difference between the first value and current value so customer is standing
+    Serial.write('1');                                // send message to screen to open
     Serial.println('\n');
     
      Serial.println("Doing Welcome Move...");
@@ -91,15 +91,15 @@ void loop()
       
       initialPosition();
       Serial.println("Done");
-    break; } // get out so only send message once
+    break; }                                          // get out so only send message once
   }
   
-  while(getDistance() < 25){ continue; } // if he still standing wait untill sensor know he walked away
+  while(getDistance() < 25){ continue; }              // if he still standing wait untill sensor know he walked away
 
 }
 }
 
-int getDistance(){ // defining the function to calculate the distance
+int getDistance(){                                    // defining the function to calculate the distance
    
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
@@ -109,7 +109,7 @@ int getDistance(){ // defining the function to calculate the distance
   digitalWrite(trigPin, LOW);
  
   duration = pulseIn(echoPin, HIGH);
-  distance = duration * 0.034 / 2;  // Calculating the distance
+  distance = duration * 0.034 / 2;                    // Calculating the distance
 
   return distance;
 }
