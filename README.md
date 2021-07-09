@@ -8,7 +8,7 @@ In this project i used an ultrasonic sensor to detect anyone in front of the rob
 **Circuit diagram:** 
 
 
-![image](https://user-images.githubusercontent.com/5675794/125006042-dbddd880-e065-11eb-9295-70710b52872c.png)
+![image](https://user-images.githubusercontent.com/5675794/125009845-02a00d00-e06e-11eb-86ac-b09c56600db3.png)
 
 
 
@@ -44,6 +44,7 @@ void setup()
   Serial.begin(9600);
   pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
   pinMode(echoPin, INPUT); // Sets the echoPin as an INPUT
+  pinMode(A0, INPUT);
   
   ServoR1_Object.attach(ServoR1);
   ServoR2_Object.attach(ServoR2);
@@ -58,10 +59,13 @@ void setup()
        ServoL1_Object.write(0);
        ServoL2_Object.write(0);
        ServoL3_Object.write(0);
+ 
 }
 
 void loop()
 {
+  int Light = analogRead(A0);
+  if(Light > 500){
   while(getDistance() > 25){  continue; } // if the sensor see someone near start counting
 
   int startTime = millis(); // start counting to know if he stay or pass by only
@@ -92,6 +96,7 @@ void loop()
   
   while(getDistance() < 25){ continue; } // if he still standing wait untill sensor know he walked away
 
+}
 }
 
 int getDistance(){ // defining the function to calculate the distance
